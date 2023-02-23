@@ -1,15 +1,22 @@
 const menuEmail = document.querySelector('.navbar-email')
 const desktopMenu = document.querySelector('.desktop-menu')
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart')
+const productDetailCloseIcon = document.querySelector('.product-detail-close')
 const menuHamIcon = document.querySelector('.menu')
 const mobileMenu = document.querySelector('.mobile-menu')
 const shoppingCartContainer = document.querySelector('#shoppingCartContainer')
+const productDetailContainer = document.querySelector('#productDetail')
 const cardsContainer = document.querySelector('.cards-container')
+const imgDetail = document.querySelector('#imgDetail')
+
+
 
 
 menuEmail.addEventListener('click', toggleDesktopMenu)
 menuHamIcon.addEventListener('click', toggleMobileMenu)
 menuCarritoIcon.addEventListener('click', toggleCarritoAside)
+productDetailCloseIcon.addEventListener('click', closeProductDetailAside)
+
 
 function toggleDesktopMenu ( ) {
     const isAsideClose = shoppingCartContainer.classList.contains('inactive')
@@ -28,6 +35,7 @@ function toggleMobileMenu () {
         shoppingCartContainer.classList.add('inactive')
     }
     
+    closeProductDetailAside()
     mobileMenu.classList.toggle('inactive')
 }
 
@@ -38,24 +46,40 @@ function toggleCarritoAside () {
         mobileMenu.classList.add('inactive')
     }
     
+    const isProductDetailClose = productDetailContainer.classList.contains('inactive')
+    
+    if (!isProductDetailClose) {
+        productDetailContainer.classList.add('inactive')
+    }
+    
     shoppingCartContainer.classList.toggle('inactive')
 }
+
+function openProductDataAside () {
+    shoppingCartContainer.classList.add('inactive')
+    productDetailContainer.classList.remove('inactive')
+}
+
+function closeProductDetailAside ()  {
+    productDetailContainer.classList.add('inactive')
+}
+
 
 const productList = []
 productList.push({
     name:'Bike',
     price: 120,
-    img: 'https:images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    img: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 })
 productList.push({
     name:'Pantalla',
     price: 220,
-    img: 'https:images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    img: 'https://www.profesionalreview.com/wp-content/uploads/2020/04/Qu%C3%A9-es-el-contraste-de-una-pantalla-03.jpg',
 })
 productList.push({
     name:'Compu',
     price: 620,
-    img: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    img: 'https://www.profesionalreview.com/wp-content/uploads/2020/04/Qu%C3%A9-es-el-contraste-de-una-pantalla-03.jpg',
 })
 
 
@@ -65,8 +89,10 @@ function renderProducts(arr) {
         const productCard = document.createElement('div')
         productCard.classList.add('product-card')
     
+        // product 
         const productImg = document.createElement('img')
         productImg.setAttribute('src', product.img)
+        productImg.addEventListener('click', openProductDataAside)
     
         const productInfo = document.createElement('div')
         productInfo.classList.add('product-info')
@@ -95,7 +121,12 @@ function renderProducts(arr) {
     
         cardsContainer.appendChild(productCard)
     }
+
+    
 }
 
 renderProducts(productList)
 
+
+
+imgDetail.setAttribute('src', product.img)
